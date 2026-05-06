@@ -5,7 +5,6 @@ const path = require('path');
 
 const app = express();
 app.use(express.json());
-app.use(express.static(__dirname));
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -100,6 +99,10 @@ app.post('/api/temps', async (req, res) => {
   catch (e) { res.status(500).json({ error: e.message }); }
 });
 
+// Serve static files (app.js, etc) but NOT index.html as default
+app.use(express.static(__dirname, { index: false }));
+
+// Explicit routes AFTER api and static
 app.get('/gastos', (req, res) => res.sendFile(path.join(__dirname, 'gastos.html')));
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
