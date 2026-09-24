@@ -62,8 +62,7 @@ app.get('/api/expenses/export', async (req, res) => {
     });
     res.setHeader('Content-Type', 'text/csv');
     res.setHeader('Content-Disposition', 'attachment; filename="manana-expenses.csv"');
-    res.send(lines.join('
-'));
+    res.send(lines.join('\n'));
   } catch(e) { res.status(500).json({error:e.message}); }
 });
 app.get('/app.js', (req, res) => { res.setHeader('Content-Type', 'application/javascript'); res.send(APP_JS); });
